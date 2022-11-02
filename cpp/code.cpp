@@ -1,4 +1,3 @@
-
 /**
  * @author: WangKang
  * @blog: kang17.xyz
@@ -27,9 +26,11 @@ int main() {
 
     return 0;
 }
+void solve() {
+}
 // @date: 2022-11-01 13:37:48
 // @brief: 混合背包问题
-void solve11111() {
+void solve9() {
     int dp[MAXN], v[10 * MAXN], w[10 * MAXN];
     int cnt = 0;  //拆分后的数量  最后都转化为01背包
     memset(dp, 0, sizeof(dp));
@@ -85,7 +86,7 @@ void solve11111() {
     // @brief: 按照二重背包的思路盘它
     for (int i = 0; i < cnt; i++) {
         for (int j = V; j >= v[i]; j--) {
-            dp[i] = max(dp[i], dp[i - v[i]] + w[i]);
+            dp[j] = max(dp[j], dp[j - v[i]] + w[i]);
         }
     }
     cout << dp[V];
