@@ -2,7 +2,7 @@
  * @author: WangKang
  * @blog: kang17.xyz
  * @filename: test.cpp
- * @filepath: cpp\test.cpp
+ * @filepath: cpp\code.cpp
  * @date: 2022-10-30 15:24:34
  * @description:  刷题
  */
@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <map>
 #include <unordered_map>
 #include <vector>
 using namespace std;
@@ -26,7 +27,43 @@ int main() {
 
     return 0;
 }
-void solve() {
+
+// @date: 2022-11-02 13:58:00
+// @brief: 13. 找出数组中重复的数字
+int solve11(vector<int> nums) {
+    map<int, int> mp;
+    int ans = -1;
+    int flag1 = false;
+    int flag2 = false;
+    int n = nums.size();
+    for (int i = 0; i < n; i++) {
+        mp[nums[i]]++;
+        if (nums[i] >= 0 && nums[i] < n) {
+            if (mp[nums[i]] > 1) {
+                ans = nums[i];
+                flag2 = true;
+            }
+        } else {
+            flag1 = true;
+            break;
+        }
+    }
+    if (flag1 == true)
+        return -1;
+    else
+        return ans;
+}
+void solve10() {
+    int dp[MAXN];
+    memset(dp, 0, sizeof(dp));
+    int n;
+    cin >> n;
+    dp[0] = 1;
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    cout << dp[n];
 }
 // @date: 2022-11-01 13:37:48
 // @brief: 混合背包问题
