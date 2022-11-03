@@ -27,23 +27,23 @@ int main() {
 
     return 0;
 }
-// @date: 2022-11-03 14:40:29
+// @date: 2022-11-03 17:37:40
 // @brief:
 void solve() {
 }
-// @date: 2022-11-03 15:10:36
-// @brief: 23. 矩阵中的路径
-// @date: 2022-11-03 16:10:21
-// @brief: made 花了我好长时间，都没做处理，总是出小bug，烦死了！！！！！！！！！！
-class Solution23 {
+// @date: 2022-11-03 17:43:02
+// @brief: 可恶，终于可以说彻底搞懂这道题目了
+// @date: 2022-11-03 17:41:42
+// @brief:23. 矩阵中的路径
+class Solution23__ {
    private:
-    unordered_map<char, bool> mp;
     bool vis[100][100];
     int flag = 0;
 
    public:
     void dfs(vector<vector<char>>& matrix, string& str, int dep, int i, int j) {
-        if (dep == str.length() - 1) {
+        //这里加个flag剪枝就好了
+        if (flag || dep == str.length() - 1) {
             flag = true;
             return;
         }
@@ -54,6 +54,7 @@ class Solution23 {
         for (int k = 0; k < 4; k++) {
             int x = i + a[k];
             int y = j + b[k];
+            //这里是dep+1
             if ((x >= 0 && y >= 0 && x < n && y < m) && !vis[x][y] && matrix[x][y] == str[dep + 1]) {
                 vis[x][y] = true;
                 dfs(matrix, str, dep + 1, x, y);
@@ -77,7 +78,87 @@ class Solution23 {
         return false;
     }
 };
-
+// @date: 2022-11-03 15:10:36
+// @brief: 23. 矩阵中的路径
+// @date: 2022-11-03 16:10:21
+// @brief: made 花了我好长时间，都没做处理，总是出小bug，烦死了！！！！！！！！！！
+// @date: 2022-11-03 17:17:52
+// @brief: made 我的码力这么差了吗，这道题让我搞了好久才写出来。！
+class Solution23_ {
+   public:
+    bool dfs(vector<vector<char>>& matrix, string& str, int dep, int i, int j) {
+        //边界检查
+        if (i < 0 || j < 0 || i >= matrix.size() || j >= matrix[i].size()) {
+            return false;
+        }
+        //判断是否可以进行下一此递归
+        if (matrix[i][j] != str[dep]) return false;
+        if (dep == str.length() - 1) {
+            return true;
+        }
+        char tmp = matrix[i][j];
+        matrix[i][j] = '*';
+        int a[] = {1, -1, 0, 0};
+        int b[] = {0, 0, 1, -1};
+        for (int k = 0; k < 4; k++) {
+            int x = i + a[k];
+            int y = j + b[k];  //这里一个等号 可害惨了我！！
+            if (dfs(matrix, str, dep + 1, x, y)) return true;
+        }
+        matrix[i][j] = tmp;
+        return false;
+    }
+    bool hasPath(vector<vector<char>>& matrix, string& str) {
+        if (!matrix.size()) return false;
+        int n = matrix.size();
+        int m = matrix[0].size();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == str[0]) {
+                    if (dfs(matrix, str, 0, i, j)) return true;
+                }
+            }
+        }
+        return false;
+    };
+};
+class Solution23 {
+   public:
+    int vis[100][100];
+    int flag = 0;
+    void dfs(vector<vector<char>>& matrix, string& str, int dep, int i, int j) {
+        //边界检查
+        if (i < 0 || j < 0 || i >= matrix.size() || j >= matrix[i].size()) {
+            return;
+        }
+        //判断是否可以进行下一此递归
+        if (flag || vis[i][j] || matrix[i][j] != str[dep]) return;
+        if (dep == str.length() - 1) {
+            flag = true;
+            return;
+        }
+        vis[i][j] = true;
+        dfs(matrix, str, dep + 1, i - 1, j);
+        dfs(matrix, str, dep + 1, i + 1, j);
+        dfs(matrix, str, dep + 1, i, j + 1);
+        dfs(matrix, str, dep + 1, i, j - 1);
+        vis[i][j] = false;
+    }
+    bool hasPath(vector<vector<char>>& matrix, string& str) {
+        if (!matrix.size()) return false;
+        int n = matrix.size();
+        int m = matrix[0].size();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == str[0]) {
+                    dfs(matrix, str, 0, i, j);
+                    if (flag) return true;
+                }
+            }
+        }
+        return false;
+    };
+};
 // @date: 2022-11-03 14:54:13
 // @brief: 22. 旋转数组的最小数字
 class Solution22 {
