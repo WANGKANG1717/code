@@ -27,6 +27,193 @@ int main() {
 
     return 0;
 }
+// @date: 2022-11-03 14:40:29
+// @brief:
+void solve() {
+    cout << "dadadds" << endl;
+}
+
+// @date: 2022-11-03 14:46:52
+// @brief: 21. 斐波那契数列
+class Solution {
+   private:
+    int fib[100];
+
+   public:
+    Solution() {
+        getFib();
+    }
+    void getFib() {
+        fib[0] = 0;
+        fib[1] = 1;
+        for (int i = 2; i <= 39; i++) {
+            fib[i] = fib[i - 1] + fib[i - 2];
+        }
+    }
+    int Fibonacci(int n) {
+        return fib[n];
+    }
+};
+// @date: 2022-11-03 14:40:04
+// @brief: 用两个栈实现队列
+class Stack {
+   private:
+    int* data;
+    int top;
+    int MAXSize = 100000;
+
+   public:
+    Stack() {
+        top = 0;
+        data = new int[100000];
+    }
+    ~Stack() {
+        delete[] data;
+    }
+    bool Push(int x) {
+        if (isFull()) {
+            return false;
+        }
+        data[top++] = x;
+        return true;
+    }
+    bool Pop(int& x) {
+        if (isEmpty()) {
+            return false;
+        }
+        x = data[--top];
+        return true;
+    }
+    bool Top(int& x) {
+        if (isEmpty()) {
+            return false;
+        }
+        x = data[top - 1];
+        return true;
+    }
+    bool isEmpty() {
+        if (top == 0)
+            return true;
+        else
+            return false;
+    }
+    bool isFull() {
+        if (top == MAXSize)
+            return true;
+        else
+            return false;
+    }
+};
+class MyQueue {
+   private:
+    Stack S1, S2;
+
+   public:
+    /** Initialize your data structure here. */
+    MyQueue() {
+    }
+
+    /** Push element x to the back of queue. */
+    bool push(int x) {
+        if (S1.isFull()) {
+            if (S2.isFull()) {
+                return false;
+            } else {
+                int x;
+                while (!S1.isEmpty()) {
+                    S1.Pop(x);
+                    S2.Push(x);
+                }
+            }
+        }
+        S1.Push(x);
+        return true;
+    }
+
+    /** Removes the element from in front of queue and returns that element. */
+    bool pop(int& x) {
+        if (empty()) {
+            return false;
+        } else {
+            if (!S1.isEmpty() && S2.isEmpty()) {
+                int tmp;
+                while (!S1.isEmpty()) {
+                    S1.Pop(tmp);
+                    S2.Push(tmp);
+                }
+            }
+            S2.Pop(x);
+            return true;
+        }
+    }
+
+    /** Get the front element. */
+    bool peek(int& x) {
+        if (empty()) {
+            return false;
+        } else {
+            if (!S1.isEmpty() && S2.isEmpty()) {
+                int tmp;
+                while (!S1.isEmpty()) {
+                    S1.Pop(tmp);
+                    S2.Push(tmp);
+                }
+            }
+            S2.Top(x);
+            return true;
+        }
+    }
+
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        if (S1.isEmpty() && S2.isEmpty()) {
+            return true;
+        } else
+            return false;
+    }
+};
+
+// @date: 2022-11-03 14:10:12
+// @brief: 19. 二叉树的下一个节点
+void solve12() {
+    /**
+     * Definition for a binary tree node.
+     * struct TreeNode {
+     *     int val;
+     *     TreeNode *left;
+     *     TreeNode *right;
+     *     TreeNode *father;
+     *     TreeNode(int x) : val(x), left(NULL), right(NULL), father(NULL) {}
+     * };
+     */
+    // class Solution {
+    //    public:
+    //     TreeNode* inorderSuccessor(TreeNode* p) {
+    //         if (p->right != NULL) {
+    //             p = p->right;
+    //             while (p->left) {
+    //                 p = p->left;
+    //             }
+    //         } else {
+    //             TreeNode* fa = p;
+    //             while (p) {
+    //                 fa = p->father;
+    //                 if (fa == NULL) {
+    //                     p = NULL;
+    //                     break;
+    //                 } else if (fa->left == p) {
+    //                     p = fa;
+    //                     break;
+    //                 } else {
+    //                     p = fa;
+    //                     fa = fa->father;
+    //                 }
+    //             }
+    //         }
+    //         return p;
+    //     }
+    // };
+}
 
 // @date: 2022-11-02 13:58:00
 // @brief: 13. 找出数组中重复的数字
