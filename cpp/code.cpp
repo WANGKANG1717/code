@@ -30,9 +30,74 @@ int main() {
 // @date: 2022-11-03 14:40:29
 // @brief:
 void solve() {
-    cout << "dadadds" << endl;
 }
+// @date: 2022-11-03 15:10:36
+// @brief: 23. 矩阵中的路径
+// @date: 2022-11-03 16:10:21
+// @brief: made 花了我好长时间，都没做处理，总是出小bug，烦死了！！！！！！！！！！
+class Solution23 {
+   private:
+    unordered_map<char, bool> mp;
+    bool vis[100][100];
+    int flag = 0;
 
+   public:
+    void dfs(vector<vector<char>>& matrix, string& str, int dep, int i, int j) {
+        if (dep == str.length() - 1) {
+            flag = true;
+            return;
+        }
+        int n = matrix.size();
+        int m = matrix[i].size();
+        int a[] = {-1, 1, 0, 0};
+        int b[] = {0, 0, 1, -1};
+        for (int k = 0; k < 4; k++) {
+            int x = i + a[k];
+            int y = j + b[k];
+            if ((x >= 0 && y >= 0 && x < n && y < m) && !vis[x][y] && matrix[x][y] == str[dep + 1]) {
+                vis[x][y] = true;
+                dfs(matrix, str, dep + 1, x, y);
+                vis[x][y] = false;
+            }
+        }
+    }
+    bool hasPath(vector<vector<char>>& matrix, string& str) {
+        for (int i = 0; i < matrix.size(); i++) {
+            for (int j = 0; j < matrix[i].size(); j++) {
+                if (matrix[i][j] == str[0]) {
+                    vis[i][j] = true;
+                    dfs(matrix, str, 0, i, j);
+                    vis[i][j] = false;
+                    if (flag == true) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+};
+
+// @date: 2022-11-03 14:54:13
+// @brief: 22. 旋转数组的最小数字
+class Solution22 {
+   public:
+    int findMin(vector<int>& nums) {
+        if (nums.size() == 0) return -1;
+        int Min = nums[0];
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] < nums[i - 1]) {
+                Min = nums[i];
+                return Min;
+            } else {
+                if (nums[i] < Min) {
+                    Min = nums[i];
+                }
+            }
+        }
+        return Min;
+    }
+};
 // @date: 2022-11-03 14:46:52
 // @brief: 21. 斐波那契数列
 class Solution {
