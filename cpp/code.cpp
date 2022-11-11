@@ -6,10 +6,6 @@
  * @date: 2022-10-30 15:24:34
  * @description:  刷题
  */
-// @date: 2022-11-01 14:06:27
-// @brief: 背包问题基本搞定了
-// @date: 2022-11-01 14:06:40
-// @brief: 明天开始搞定二进制优化，再刷两道背包问题,然后开始学分治
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
@@ -18,19 +14,231 @@
 #include <unordered_map>
 #include <vector>
 using namespace std;
-#define MAXSIZE 1010
 typedef long long ll;
-#define MAXN 1003
-void solve();
+#define pii pair<int, int>
+#define mk make_pair
+const int MAXN = 1005, MOD = 1e9 + 7;
+// @date: 2022-11-11 22:55:45
+// @brief: 24. 机器人的运动范围 BFS版本
+// 有待实现
+
+/* // @date: 2022-11-11 22:53:59
+// @brief: 一道简单的深度搜索题目，还让我花费了点时间调试。。。
+class Solution123122 {
+   private:
+    int k, cols, rows;
+    int ans;
+    bool vis[1000][1000];
+
+   public:
+    int f(int i, int j) {
+        int sum = 0;
+        while (i) {
+            sum += i % 10;
+            i /= 10;
+        }
+        while (j) {
+            sum += j % 10;
+            j /= 10;
+        }
+        return sum;
+    }
+    void cnt(int x, int y) {
+        if (x < 0 || y < 0 || x >= rows || y >= cols || f(x, y) > k) return;
+        if (vis[x][y]) return;
+        ans++;
+        vis[x][y] = true;
+        cnt(x + 1, y);
+        cnt(x, y + 1);
+        cnt(x - 1, y);
+        cnt(x, y - 1);
+    }
+    int movingCount(int threshold, int rows, int cols) {
+        k = threshold;
+        this->cols = cols;
+        this->rows = rows;
+        cnt(0, 0);
+        return ans;
+    }
+};
 int main() {
-    solve();
+    Solution123122 s;
+    s.movingCount(10, 2, 2);
+    return 0;
+} */
+
+/*
+// @date: 2022-11-10 22:58:23
+// @brief:  分组背包问题
+int dp[MAXN];
+int w[MAXN];
+int v[MAXN];
+int N, V, S;
+int main() {
+    cin >> N >> V;
+    for (int i = 1; i <= N; i++) {
+        cin >> S;
+        for (int j = 0; j < S; j++) {
+            cin >> v[j] >> w[j];
+        }
+        // @date: 2022-11-09 22:55:02
+        // @brief: 这里要注意 优化为一维背包后，必须将枚举物品的循环放在枚举提及的循化里面
+        // for (int k = 0; k < S; k++) {
+        //     for (int j = V; j >= 0; j--) {
+        //         if (j >= v[k])
+        //             dp[j] = max(dp[j], dp[j - v[k]] + w[k]);
+        //     }
+        // }
+        for (int j = V; j >= 0; j--) {
+            for (int k = 0; k < S; k++) {
+                if (j >= v[k]) {
+                    dp[j] = max(dp[j], dp[j - v[k]] + w[k]);
+                }
+            }
+        }
+    }
+    cout << dp[V] << endl;
 
     return 0;
-}
-// @date: 2022-11-03 17:37:40
-// @brief:
-void solve() {
-}
+} */
+
+/* // @date: 2022-11-08 22:30:23
+// @brief: 01背包求字典序最小的方案
+int dp[MAXN][MAXN];
+int w[MAXN];
+int v[MAXN];
+int N, V;
+int main() {
+    cin >> N >> V;
+    for (int i = 1; i <= N; i++) {
+        cin >> v[i] >> w[i];
+    }
+    for (int i = N; i >= 1; i--) {
+        for (int j = 0; j <= V; j++) {
+            dp[i][j] = dp[i + 1][j];
+            if (j >= v[i]) {
+                dp[i][j] = max(dp[i + 1][j], dp[i + 1][j - v[i]] + w[i]);
+            }
+        }
+    }
+    int i = 1, j = V;
+    // @date: 2022-11-09 22:29:34
+    // @brief: 因为要求字典序最小的方案，所以要从前向后推
+    while (i <= N) {
+        if (j >= v[i] && (dp[i + 1][j - v[i]] + w[i]) == dp[i][j]) {
+            cout << i << " ";
+            j -= v[i];
+        }
+        i++;
+    }
+
+    return 0;
+} */
+
+/* // @date: 2022-11-05 22:46:19
+// @brief: 01背包问题求方案数一维版本
+int dp[MAXN];
+int cnt[MAXN];
+int main() {
+    int N, V;
+    cin >> N >> V;
+    int w, v;
+    int val;
+    // cnt[0] = 1;
+    // @date: 2022-11-07 22:29:25
+    // @brief: 初始化要这样
+    fill(cnt, cnt + MAXN, 1);
+    for (int i = 1; i <= N; i++) {
+        int v, w;
+        cin >> v >> w;
+        // @date: 2022-11-07 22:29:04
+        // @brief: 这里是体积v
+        for (int j = V; j >= v; j--) {
+            int val = dp[j - v] + w;
+            // @date: 2022-11-07 22:29:40
+            // @brief: 根据情况进行判断
+            if (val > dp[j]) {
+                dp[j] = val;
+                cnt[j] = cnt[j - v];
+            } else if (val == dp[j]) {
+                cnt[j] = (cnt[j] + cnt[j - v]) % MOD;
+            }
+        }
+    }
+    cout << cnt[V] << endl;
+    return 0;
+} */
+
+// @date: 2022-11-05 22:26:43
+// @brief: 01背包问题求方案数
+/* int dp[MAXN][MAXN];
+int cnt[MAXN][MAXN];
+int w[MAXN];
+int v[MAXN];
+int main() {
+    int N, V;
+    cin >> N >> V;
+    for (int i = 1; i <= N; i++) {
+        cin >> v[i] >> w[i];
+    }
+    for (int j = 0; j <= V; j++) {
+        cnt[0][j] = 1;
+    }
+    for (int i = 1; i <= N; i++) {
+        for (int j = 0; j <= V; j++) {
+            if (j < v[i]) {
+                dp[i][j] = dp[i - 1][j];
+                cnt[i][j] = cnt[i - 1][j];
+            } else {
+                if (dp[i-1][j - v[i]] + w[i] > dp[i - 1][j]) {
+                    cnt[i][j] = cnt[i - 1][j - v[i]];
+                } else if (dp[i - 1][j - v[i]] + w[i] == dp[i - 1][j]) {
+                    cnt[i][j] = (cnt[i - 1][j - v[i]] + cnt[i - 1][j]) % MOD;
+                } else {
+                    cnt[i][j] = cnt[i - 1][j];
+                }
+                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i]);
+            }
+        }
+    }
+    cout << cnt[N][V] << endl;
+
+    return 0;
+} */
+/* // @date: 2022-11-04 22:41:54
+// @brief: 货币求组合方案数
+// @date: 2022-11-04 22:48:43
+// @brief: 很难理解 需要慢慢理会了
+#include <iostream>
+using namespace std;
+#define N 100
+#define M 10001
+#define ll long long
+ll dp[N][M];
+int w[N];
+int main() {
+    int n, m;
+    // n为货币面值数 m为要凑的面值
+    cin>>n>>m;
+    for(int i=1; i<=n; i++)  {
+        cin>>w[i];
+    }
+    dp[0][0]=1;
+    // i代表当前取的是第几个面值
+    for(int i=1; i<=n; i++) {
+        // j代表当前是在凑多大的面值
+        for(int j=0; j<=m; j++) {
+            // k代表我拿做多少这种数额的纸币去进行凑面额
+            for(int k=0; k*w[i]<=j; k++) {
+                dp[i][j]+=dp[i-1][j-k*w[i]];
+            }
+        }
+    }
+
+    cout<<dp[n][m];
+
+    return 0;
+} */
 // @date: 2022-11-03 17:43:02
 // @brief: 可恶，终于可以说彻底搞懂这道题目了
 // @date: 2022-11-03 17:41:42
