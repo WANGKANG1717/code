@@ -11,7 +11,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <cstring>
 #include <iostream>
 #include <map>
 #include <queue>
@@ -19,13 +18,61 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-// @date: 2022-11-27 14:39:31
-// @brief: 进制转换
+using namespace std;
+#include "../head/BigInteger.h"
 int main() {
-    
+    // BigInteger a = -12345678;
+    // cout << a << endl;
+    // BigInteger b = "121321223";
+    // cout << b << endl;
+    // BigInteger x = b;
+    // cout << x << endl;
+    // string aa = "-12122";
+    // BigInteger v = aa;
+    // cout << v << endl;
+
+    // BigInteger qq;
+    // cin >> qq;
+    // cout << qq << endl;
+
+    // BigInteger qqq;
+    // cout << qqq << endl;
+    BigInteger a = 1;
+    BigInteger b = "0000100000";
+    BigInteger c = a + b;
+    // cout << a << endl;
+    // cout << b << endl;
+    // cout << c << endl;
+    BigInteger d = a - b;
+    cout << d << endl;
     return 0;
 }
+
+/* // @date: 2022-11-27 14:39:31
+// @brief: 进制转换
+int main() {
+    int a = 15;
+    printf("%d\n", a);
+    printf("%o\n", a);
+    printf("%x\n", a);
+    cout << oct << a << endl;
+    cout << hex << a << endl;
+    cout << dec << a << endl;
+
+    string b = "12120";
+    int c = atoi(b.c_str());
+    cout << c << endl;
+    char s[100];
+    itoa(100000, s, 2);
+    cout << s << endl;
+    char ss[10000];
+    sprintf(ss, "%d %x %o", s, 10, 10);         //很好用的哦
+    cout << ss << endl;
+
+
+
+    return 0;
+} */
 
 /* // @date: 2022-11-27 14:28:35
 // @brief: 约瑟夫环 问题
