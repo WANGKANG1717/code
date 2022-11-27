@@ -6,22 +6,934 @@
  * @date: 2022-10-30 15:24:34
  * @description:  刷题
  */
+#include <algorithm>
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <cstring>
 #include <iostream>
 #include <map>
+#include <queue>
+#include <stack>
+#include <string>
 #include <unordered_map>
 #include <vector>
+
+// @date: 2022-11-27 14:39:31
+// @brief: 进制转换
+int main() {
+    
+    return 0;
+}
+
+/* // @date: 2022-11-27 14:28:35
+// @brief: 约瑟夫环 问题
+#include <cstring>
+#include <iostream>
+#include <string>
 using namespace std;
-typedef long long ll;
+#define MAXN 100010
+bool vis[MAXN];
+int main() {
+    int t;
+    cin >> t;
+    int num;
+    while (t--) {
+        cin >> num;
+        memset(vis, 0, sizeof(vis));
+        int cnt = 0;
+        int i = 0;
+        int p = 0;
+        while (cnt < num) {
+            if (!vis[i]) {
+                p++;
+                if (p % 3 == 0) {
+                    cnt++;
+                    cout << i + 1 << " ";
+                    vis[i] = 1;
+                }
+            }
+            i = (i + 1) % num;
+        }
+        cout << endl;
+    }
+    return 0;
+} */
+
+/* // @date: 2022-11-27 14:15:10
+// @brief: 猴子吃桃问题
+#include <iostream>
+using namespace std;
+int main() {
+    int cnt = 0;
+    int sum = 1;
+    while (cnt < 10) {
+        sum = (sum + 1) * 2;
+        cnt++;
+    }
+    cout << sum << endl;
+
+    return 0;
+} */
+/*
+// @date: 2022-11-27 14:14:56
+// @brief: 自由落体问题
+#include <iostream>
+using namespace std;
+int main() {
+    double h = 100;
+    int sum = 0;
+    int cnt = 0;
+    while (cnt < 10) {
+        sum += h * ((cnt == 0) ? 1 : 2);
+        h /= 2;
+        cnt++;
+    }
+    cout << sum << endl;
+    cout << h << endl;
+
+    return 0;
+}
+ */
+/* #include <iostream>
+
+#include "../head/BigInteger.h"
+using namespace std;
+int main() {
+    BigInteger a;
+    cout << a << endl;
+
+    return 0;
+} */
+
+/* // @date: 2022-11-27 13:07:34
+// @brief: 正整数分解
+// @date: 2022-11-27 13:08:18
+// @brief: 筛出1-n的质因子数
+// 第一中方法 直接暴力求解
+#define MAXN 10000001
+int p[MAXN];
+int cnt = 0;
+bool prime(int num) {
+    if (num < 2) return false;
+    for (int i = 2; i <= (int)sqrt(num); i++) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+void f1(int n) {
+    cnt = 0;
+    for (int i = 2; i <= n; i++) {
+        if (prime(i)) {
+            p[cnt++] = i;
+        }
+    }
+}
+// @date: 2022-11-27 13:22:22
+// @brief: 埃氏筛 筛出素数   O(nlogn)
+bool vis[MAXN];
+void f2(int num) {
+    for (int i = 2; i <= num; i++) {
+        if (!vis[i]) {
+            p[cnt++] = i;
+            for (int j = i; j <= num; j += i) {
+                vis[j] = true;
+            }
+        }
+    }
+}
+// @date: 2022-11-27 13:36:00
+// @brief: 线性筛   O(n)
+void f3(int num) {
+    for (int i = 2; i <= num; i++) {
+        if (!vis[i]) {
+            p[cnt++] = i;
+            for (int j = 0; j <= cnt && p[j] * i < MAXN; j++) {
+                vis[p[j] * i] = true;
+            }
+        }
+    }
+}
+
+// @date: 2022-11-27 13:11:44
+// @brief: 将一个数字分解为多个数字的质因数和
+vector<int> v;
+void solve(int num) {
+    // f1(num);
+    f2(num);
+    v.clear();
+    int i = 0;
+    while (num > 1 && i < cnt) {
+        while (num % p[i] == 0) {
+            v.push_back(p[i]);
+            num /= p[i];
+        }
+        i++;
+    }
+    for (auto it = v.begin(); it != v.end(); it++) {
+        cout << *it << " ";
+    }
+    cout << endl;
+}
+int main() {
+    solve(100);
+    for (auto it = 0; it < cnt; it++) {
+        cout << p[it] << " ";
+    }
+    cout << endl;
+
+    return 0;
+} */
+
+/*
+// @date: 2022-11-26 17:06:12
+// @brief: 输出指定范围的水仙花数
+#include<iostream>
+using namespace std;
+int f2(int i) {
+    return i*i*i;
+}
+int f(int n) {
+    int ans=f2(n/100) + f2((n/10) %10) + f2(n%10);
+    return ans;
+}
+int main() {
+    int a, b;
+    while(cin>>a>>b && b!=0) {
+        int flag=false;
+        for(int i=a; i<=b; i++) {
+            if(i==f(i)) {
+                cout<<i<<" ";
+                flag=true;
+            }
+        }
+        if(!flag) {
+            cout<<"no";
+        }
+        cout<<endl;
+    }
+
+
+    return 0;
+}
+ */
+// #include <cctype>
+// #include <iostream>
+// using namespace std;
+// double f(int n) {
+//     double ans = 1.0;
+//     for (int i = 1; i <= n; i++) {
+//         ans *= i;
+//     }
+//     return ans;
+// }
+// int main() {
+//     /*     int x, y, z;
+//         cin >> x >> y >> z;
+//         if(x<y) {
+//             swap(x, y);
+//         }
+//         if(x<z) {
+//             swap(x, z);
+//         }
+//         if(y<z) {
+//             swap(y, z);
+//         }
+//         cout << x<<" " << y<<" " << z << endl; */
+//     /*  for (int i = 1; i <= 9; i++) {
+//          for (int j = 1; j <= i; j++) {
+//              cout << i << "*" << j << "=" << i * j << " ";
+//          }
+//          cout << endl;
+//      } */
+//     /*     int score;
+//         cin >> score;
+//         if (score >= 90) {
+//             cout << "A" << endl;
+//         } else if (score >= 60) {
+//             cout << "B" << endl;
+//         } else {
+//             cout << "C" << endl;
+//         } */
+//     /*     string s;
+//         cin >> s;
+//         int num = 0, alpha = 0, other = 0;
+//         for (int i = 0; i < s .length(); i++) {
+//             if (isdigit(s[i])) {
+//                 num++;
+//             } else if (isalpha(s[i])) {
+//                 alpha++;
+//             } else {
+//                 other++;
+//             }
+//         }
+//         cout << num << " " << alpha << " " << other << endl; */
+//     /*     int x, y, z;
+//         cin >> x >> y >> z;
+//         if (x < y) {
+//             swap(x, y);
+//         }
+//         if (x < z) {
+//             swap(x, z);
+//         }
+//         if (y < z) {
+//             swap(y, z);
+//         }
+//         cout << x << " " << y << " " << z << endl;
+//         if (x + y <= z) {
+//             cout << "No!" << endl;
+//         } else if (x == y && y == z) {
+//             cout << "等边三角形" << endl;
+//         } else if (x == y || x == z || y == z) {
+//             cout << "等腰三角形" << endl;
+//         } else if (x * x == y * y + z * z) {
+//             cout << "等边三角形" << endl;
+//         } else {
+//             cout << "普通三角形" << endl;
+//         } */
+// /*
+//     double ans = 1.0;
+//     int n = 1;
+//     do {
+//         double p = 1.0 / f(n);
+//         if (p < 1e-10) {
+//             break;
+//         }
+//         n++;
+//         ans += p;
+//     } while (1);
+//     cout << ans << endl; */
+
+//     return 0;
+// }
+
+/*
+// @date: 2022-11-26 16:04:37
+// @brief: 判断八皇后
+#include <cmath>
+#include <iostream>
+using namespace std;
+int a[10002];
+bool check(int a[], int n) {
+    for(int i=0; i<n-1; i++) {
+        for(int j=i+1; j<n; j++) {
+            if(a[i]==a[j] || abs(a[i]-a[j])==abs(i-j)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+int main() {
+    int t, n;
+    cin>>t;
+    while(t--) {
+        cin>>n;
+        for(int i=0; i<n; i++) {
+            cin>>a[i];
+        }
+        if(check(a, n)) {
+            cout<<"YES"<<endl;
+        }
+        else {
+            cout<<"NO"<<endl;
+        }
+    }
+
+
+
+
+    return 0;
+}
+ */
+
+/*
+// @date: 2022-11-26 15:20:11
+// @brief: 最长上升子序列
+#include<iostream>
+using namespace std;
+int dp[1002];
+int n;
+int a[1003];
+int main() {
+    cin>>n;
+    for(int i=1; i<=n; i++) {
+        cin>>a[i];
+    }
+    int ans=-1;
+    for(int i=1; i<=n; i++) {
+        dp[i] = 1;
+        for(int j=1; j<=i; j++) {
+            if(a[i]>a[j]) {
+                dp[i]=max(dp[i], dp[j]+1);
+            }
+        }
+        ans=max(ans, dp[i]);
+    }
+
+    cout<<ans<<endl;
+    return 0;
+} */
+/*
+// @date: 2022-11-26 15:11:21
+// @brief: 花了好久才算看着别人的代码一点点调试出来了
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+// @date: 2022-11-26 14:23:07
+// @brief: 最长公共子序列
+#define N 5005
+#define MOD 100000000
+// @date: 2022-11-26 15:02:39
+// @brief: 使用滚动数组 压缩空间
+int dp[2][N];
+int cnt[2][N];
+int n, m;
+int t = 0;
+string a, b;
+
+int main() {
+    cin >> a >> b;
+    n = a.length() - 1;
+    m = b.length() - 1;
+    a = " " + a;  // 0下表不使用
+    b = " " + b;
+    //初始化方案数
+    for (int i = 0; i <= m; i++) {
+        cnt[0][i] = 1;
+    }
+    cnt[1][0] = 1;
+
+    for (int i = 1; i <= n; i++, t ^= 1) {
+        for (int j = 1; j <= m; j++) {
+            cnt[t ^ 1][j] = 0;
+            if (a[i] == b[j]) {
+                dp[t ^ 1][j] = dp[t][j - 1] + 1;
+                cnt[t ^ 1][j] += cnt[t][j - 1];
+            } else {
+                dp[t ^ 1][j] = max(dp[t][j], dp[t ^ 1][j - 1]);
+            }
+            if (dp[t ^ 1][j] == dp[t][j]) {
+                cnt[t ^ 1][j] += cnt[t][j];
+            }
+            if (dp[t ^ 1][j] == dp[t ^ 1][j - 1]) {
+                cnt[t ^ 1][j] += cnt[t ^ 1][j - 1];
+            }
+            if (dp[t ^ 1][j] == dp[t][j - 1]) {
+                cnt[t ^ 1][j] -= cnt[t][j - 1];
+            }
+            cnt[t ^ 1][j] = cnt[t ^ 1][j] % MOD;
+        }
+    }
+    cout << dp[t][m] << endl;
+    cout << cnt[t][m] << endl;
+
+    return 0;
+} */
+
+/* #include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+// @date: 2022-11-26 14:23:07
+// @brief: 最长公共子序列
+#define N 5005
+#define MOD 100000000
+int dp[N][N];
+int cnt[N][N];
+int n, m;
+string a, b;
+
+int main() {
+    cin >> a >> b;
+    n = a.length() - 1;
+    m = b.length() - 1;
+    a = " " + a;  // 0下表不使用
+    b = " " + b;
+    //初始化方案数
+    for (int i = 0; i <= 5000; i++) {
+        cnt[0][i] = 1;
+    }
+    for (int i = 0; i <= 5000; i++) {
+        cnt[i][0] = 1;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (a[i] == b[j]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+                cnt[i][j] += cnt[i - 1][j - 1];
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+            if (dp[i][j] == dp[i - 1][j]) {
+                cnt[i][j] += cnt[i - 1][j];
+            }
+            if (dp[i][j] == dp[i][j - 1]) {
+                cnt[i][j] += cnt[i][j - 1];
+            }
+            if (dp[i][j] == dp[i - 1][j - 1]) {
+                cnt[i][j] -= cnt[i - 1][j - 1];
+            }
+            cnt[i][j] = cnt[i][j] % MOD;
+        }
+    }
+    cout << dp[n][m] << endl;
+    cout << cnt[n][m] << endl;
+
+    return 0;
+} */
+
+/* // @date: 2022-11-26 13:41:57
+// @brief: 利用快速排序的思想寻找数组中第k小的元素
+#define MAXINT 0x7f7f7f7f
+int getKthValue_(int data[], int n, int k, int low, int high) {
+    int tmp = data[low];
+    int l = low;
+    int r = high;
+    while (l < r) {
+        while (l < r && data[r] > tmp) {
+            r--;
+        }
+        data[l] = data[r];
+        while (l < r && data[l] <= tmp) {
+            l++;
+        }
+        data[r] = data[l];
+    }
+    data[l] = tmp;
+    // cout << "----------------" << endl;
+    // for(int i=0; i<n; i++) {
+    //     cout << data[i] << " ";
+    // }
+    // cout << endl;
+    if (l == (k - 1)) {
+        return data[l];
+    } else if (l < (k - 1)) {
+        // @brief: 这里的l+1 \ l-1 要注意
+        return getKthValue_(data, n, k, l + 1, high);
+    } else {
+        return getKthValue_(data, n, k, low, l - 1);
+    }
+}
+/// @brief 主程序
+/// @param data 数组
+/// @param n 数组的大小         0 ~ n-1
+/// @param k 要寻找的第k小的元素        1~n
+/// @return 第k小的元素
+int getKthValue(int data[], int n, int k) {
+    if (k <= 0 || k > n) {
+        return -MAXINT;
+    }
+    return getKthValue_(data, n, k, 0, n - 1);
+}
+int main() {
+    int data[100020];
+    int n;
+    int k;
+    cin >> n;
+    unordered_map<int, bool> mp;
+    int cnt = 0;
+    int x;
+    for (int i = 0; i < n; i++) {
+        cin >> x;
+        if (mp[x] == false) {
+            data[cnt++] = x;
+            mp[x] = true;
+        }
+    }
+    cin >> k;
+    cout << getKthValue(data, cnt, k);
+
+    return 0;
+} */
+
+/*
+// @date: 2022-11-19 22:27:04
+// @brief: 搞成蛇形输出了
+class Solution {
+public:
+    #define debug(x) cout << #x << " = " << x << endl
+    vector<int> printMatrix(vector<vector<int> > matrix) {
+        vector<int> ans;
+        // ans.reserve(10000);
+        int sum=matrix.size() * matrix[0].size();
+        int cnt=0;
+        int i=0, j=0;
+        int left, right, up, down;
+        left=0;
+        up=0;
+        right=matrix[0].size()-1;
+        down=matrix.size()-1;
+        int x=1;    //控制x轴走向       横向
+        int y=1;    //控制y轴走向       竖向
+        while(cnt<sum) {
+            ans.push_back(matrix[i][j]);
+            cnt++;
+            j+=x;
+            if(j>right || j<0) {
+                x*=-1;
+                j+=x;
+                i+=y;
+                if(i>down || i<0) {
+                    y*=-1;
+                    i+=y;
+                }
+            }
+        }
+        return ans;
+    }
+};
+ */
+
+/*
+class Solution {
+public:
+    bool Judge(TreeNode *p1, TreeNode * p2) {
+        if(p1==NULL && p2==NULL) {
+            return true;
+        }
+        else if(p1!=NULL && p2!=NULL && p1->val == p2->val) {
+            return Judge(p1->left, p2->right) && Judge(p1->right, p2->left);
+        }
+        else {
+            return false;
+        }
+    }
+    bool isSymmetric(TreeNode* root) {
+        return Judge(root, root);
+    }
+};
+*/
+
+/*
+// @date: 2022-11-18 22:32:24
+// @brief: 二叉树的镜像
+class Solution {
+public:
+    void mirror(TreeNode* root) {
+        if(root==NULL) {
+            return ;
+        }
+        else {
+            mirror(root->left);
+            mirror(root->right);
+            TreeNode* tmp=root->left;
+            root->left=root->right;
+            root->right=tmp;
+        }
+    }
+};
+*/
+
+/*
+// @date: 2022-11-18 22:29:40
+// @brief: 树的子结构
+class Solution {
+public:
+    #define debug(x) cout<<#x<<"="<<x<<endl
+    queue<TreeNode *> Q;
+    void Traverse(TreeNode *p1, int val) {
+        if(p1==NULL) {
+            return ;
+        }
+        else if(p1->val==val) {
+            Q.push(p1);
+        }
+        Traverse(p1->left, val);
+        Traverse(p1->right, val);
+    }
+    bool Judge(TreeNode *p1, TreeNode *p2) {
+        // @date: 2022-11-18 22:30:36
+        // @brief: 这里的判断条件要十分注意，有两个判断为true
+        if(p1==NULL && p2==NULL) {
+            return true;
+        }
+        else if(p1!=NULL && p2==NULL) {
+            return true;
+        }
+        else if(p1!=NULL && p2!=NULL && p1->val == p2->val) {
+            // debug(p1->val);
+            // debug(p2->val);
+            return Judge(p1->left, p2->left) && Judge(p1->right, p2->right);
+        }
+        else return false;
+    }
+    bool hasSubtree(TreeNode* pRoot1, TreeNode* pRoot2) {
+        if(pRoot2==NULL) return false;
+        Traverse(pRoot1, pRoot2->val);
+        while(!Q.empty()) {
+            // cout<<"-----------"<<endl;
+            TreeNode *p=Q.front();
+            Q.pop();
+            bool flag=Judge(p, pRoot2);
+            if(flag) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+ */
+
+/*
+// @date: 2022-11-17 22:48:53
+// @brief: 数值的整数次方
+// @date: 2022-11-17 22:50:52
+// @brief: 用优化后的快速幂写了一下
+class Solution {
+public:
+    #define ll long long
+    double Power(double base, int exponent) {
+        ll pow_=exponent;
+        int flag=(pow_<0? 1:0);
+        pow_=abs(pow_);
+        double ans=1.0;
+        while(pow_) {
+            if(pow_ & 1) {
+                ans*=base;
+            }
+            base*=base;
+            pow_>>=1;
+        }
+
+        if(flag) {
+            ans=1.0/ans;
+        }
+        return ans;
+    }
+};
+
+
+class Solution {
+public:
+    #define ll long long
+    double Power(double base, int exponent) {
+        ll pow_=exponent;
+        int flag=(pow_<0? 1:0);
+        pow_=abs(pow_);
+        double ans=1.0;
+        while(pow_) {
+            if(pow_%2==0) {
+                base*=base;
+                pow_/=2;
+            }
+            else {
+                pow_--;
+                ans*=base;
+                base*=base;
+                pow_/=2;
+            }
+        }
+
+        if(flag) {
+            ans=1.0/ans;
+        }
+        return ans;
+    }
+};
+ */
+/*
+// @date: 2022-11-16 22:55:44
+// @brief: 二进制中1的个数
+class Solution {
+public:
+
+    int NumberOf1(int n) {
+        int cnt=0;
+        for(int i=0; i<32; i++) {
+            cnt+=(n>>i & 1);
+        }
+        return cnt;
+    }
+};
+ */
+/*
+// @date: 2022-11-15 22:23:00
+// @brief: 调整奇数和偶数的区别
+class Solution {
+public:
+    void reOrderArray(vector<int> &array) {
+         int i=0;
+         int j=array.size();
+         while(i<j) {
+             while(i<j && array[i]%2!=0) {
+                 i++;
+             }
+             while(i<j && array[j]%2==0) {
+                 j--;
+             }
+             swap(array[i], array[j]);
+             i++;
+             j--;
+         }
+    }
+};
+ */
+/*
+// @date: 2022-11-13 22:47:30
+// @brief: 合并链表
+class Solution {
+public:
+    ListNode* merge(ListNode* l1, ListNode* l2) {
+        ListNode *head=new ListNode(-1);
+        ListNode *i=head;
+        ListNode*p=l1, *q=l2;
+        while(p && q) {
+            if(p->val<q->val) {
+                i->next=p;
+                i=p;
+                p=p->next;
+            }
+            else {
+                i->next=q;
+                i=q;
+                q=q->next;
+            }
+        }
+        while(p) {
+            i->next=p;
+            i=p;
+            p=p->next;
+        }
+        while(q) {
+            i->next=q;
+            i=q;
+            q=q->next;
+        }
+        return head->next;
+    }
+};
+ */
+
+/*
+// @date: 2022-11-13 22:43:07
+// @brief: 反转链表递归
+class Solution {
+public:
+    ListNode* reverse(ListNode* pre, ListNode* p) {
+        if(p==NULL) return pre;
+        ListNode* r=p->next;
+        p->next=pre;
+        return reverse(p, r);
+    }
+    ListNode* reverseList(ListNode* head) {
+        return reverse(NULL, head);
+    }
+};
+ */
+
+/*
+// @date: 2022-11-13 22:33:22
+// @brief: 反转链表 非递归
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head==NULL) {
+            return head;
+        }
+        //
+        ListNode *pre=NULL;
+        ListNode *p=head;
+        ListNode* r=p->next;
+        while(p) {
+            p->next=pre;
+            pre=p;
+            p=r;
+            if(r) {
+                r=r->next;
+            }
+        }
+        return pre;
+    }
+}; */
+/* // @date: 2022-11-12 22:42:54
+// @brief: 剪绳子
+class Solution {
+   public:
+#define debug(x) cout << #x << "=" << x << endl
+    int maxProductAfterCutting(int length) {
+        if (length <= 3) {
+            return 1 * (length - 1);
+        }
+        int ans = 1;
+        // @date: 2022-11-12 22:53:41
+        // @brief: 这道题目的关键在于要用3来乘，剩下的较小的要单独处理
+        while (length > 4) {
+            ans *= 3;
+            length -= 3;
+        }
+        ans *= length;
+
+        return ans;
+    }
+}; */
+
+/* // @date: 2022-11-11 22:55:45
+// @brief: 24. 机器人的运动范围 BFS版本
+class Solution {
+   private:
+    int k, cols, rows;
+    bool vis[1000][1000];
+
+   public:
 #define pii pair<int, int>
 #define mk make_pair
-const int MAXN = 1005, MOD = 1e9 + 7;
-// @date: 2022-11-11 22:55:45
-// @brief: 24. 机器人的运动范围 BFS版本
-// 有待实现
+    int f(int i, int j) {
+        int sum = 0;
+        while (i) {
+            sum += i % 10;
+            i /= 10;
+        }
+        while (j) {
+            sum += j % 10;
+            j /= 10;
+        }
+        return sum;
+    }
+    int bfs() {
+        // @date: 2022-11-12 22:40:56
+        // @brief: 特殊情况 特殊判断
+        if (!cols || !rows) {
+            return 0;
+        }
+        int a[] = {1, -1, 0, 0};
+        int b[] = {0, 0, 1, -1};
+        queue<pii> Q;
+        int ans = 0;
+        Q.push({0, 0});
+        vis[0][0] = true;
+        ans++;// 别忘了这里
+        while (!Q.empty()) {
+            pii p = Q.front();
+            Q.pop();
+            for (int i = 0; i < 4; i++) {
+                int x = p.first + a[i];
+                int y = p.second + b[i];
+                // @date: 2022-11-12 22:41:28
+                // @brief: 每次入队的总是合理的数据
+                if (x >= 0 && x < rows && y >= 0 && y < cols && !vis[x][y] && f(x, y) <= k) {
+                    Q.push({x, y});
+                    vis[x][y] = true;
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+    int movingCount(int threshold, int rows, int cols) {
+        k = threshold;
+        this->cols = cols;
+        this->rows = rows;
 
+        return bfs();
+    }
+};
+ */
 /* // @date: 2022-11-11 22:53:59
 // @brief: 一道简单的深度搜索题目，还让我花费了点时间调试。。。
 class Solution123122 {
@@ -239,7 +1151,7 @@ int main() {
 
     return 0;
 } */
-// @date: 2022-11-03 17:43:02
+/* // @date: 2022-11-03 17:43:02
 // @brief: 可恶，终于可以说彻底搞懂这道题目了
 // @date: 2022-11-03 17:41:42
 // @brief:23. 矩阵中的路径
@@ -285,8 +1197,8 @@ class Solution23__ {
         }
         return false;
     }
-};
-// @date: 2022-11-03 15:10:36
+}; */
+/* // @date: 2022-11-03 15:10:36
 // @brief: 23. 矩阵中的路径
 // @date: 2022-11-03 16:10:21
 // @brief: made 花了我好长时间，都没做处理，总是出小bug，烦死了！！！！！！！！！！
@@ -329,8 +1241,8 @@ class Solution23_ {
         }
         return false;
     };
-};
-class Solution23 {
+}; */
+/* class Solution23 {
    public:
     int vis[100][100];
     int flag = 0;
@@ -366,8 +1278,8 @@ class Solution23 {
         }
         return false;
     };
-};
-// @date: 2022-11-03 14:54:13
+}; */
+/* // @date: 2022-11-03 14:54:13
 // @brief: 22. 旋转数组的最小数字
 class Solution22 {
    public:
@@ -386,8 +1298,8 @@ class Solution22 {
         }
         return Min;
     }
-};
-// @date: 2022-11-03 14:46:52
+}; */
+/* // @date: 2022-11-03 14:46:52
 // @brief: 21. 斐波那契数列
 class Solution {
    private:
@@ -407,8 +1319,8 @@ class Solution {
     int Fibonacci(int n) {
         return fib[n];
     }
-};
-// @date: 2022-11-03 14:40:04
+}; */
+/* // @date: 2022-11-03 14:40:04
 // @brief: 用两个栈实现队列
 class Stack {
    private:
@@ -463,11 +1375,9 @@ class MyQueue {
     Stack S1, S2;
 
    public:
-    /** Initialize your data structure here. */
     MyQueue() {
     }
 
-    /** Push element x to the back of queue. */
     bool push(int x) {
         if (S1.isFull()) {
             if (S2.isFull()) {
@@ -484,7 +1394,6 @@ class MyQueue {
         return true;
     }
 
-    /** Removes the element from in front of queue and returns that element. */
     bool pop(int& x) {
         if (empty()) {
             return false;
@@ -501,7 +1410,6 @@ class MyQueue {
         }
     }
 
-    /** Get the front element. */
     bool peek(int& x) {
         if (empty()) {
             return false;
@@ -518,7 +1426,6 @@ class MyQueue {
         }
     }
 
-    /** Returns whether the queue is empty. */
     bool empty() {
         if (S1.isEmpty() && S2.isEmpty()) {
             return true;
@@ -526,50 +1433,49 @@ class MyQueue {
             return false;
     }
 };
-
-// @date: 2022-11-03 14:10:12
+ */
+/* // @date: 2022-11-03 14:10:12
 // @brief: 19. 二叉树的下一个节点
 void solve12() {
-    /**
-     * Definition for a binary tree node.
-     * struct TreeNode {
-     *     int val;
-     *     TreeNode *left;
-     *     TreeNode *right;
-     *     TreeNode *father;
-     *     TreeNode(int x) : val(x), left(NULL), right(NULL), father(NULL) {}
-     * };
-     */
-    // class Solution {
-    //    public:
-    //     TreeNode* inorderSuccessor(TreeNode* p) {
-    //         if (p->right != NULL) {
-    //             p = p->right;
-    //             while (p->left) {
-    //                 p = p->left;
-    //             }
-    //         } else {
-    //             TreeNode* fa = p;
-    //             while (p) {
-    //                 fa = p->father;
-    //                 if (fa == NULL) {
-    //                     p = NULL;
-    //                     break;
-    //                 } else if (fa->left == p) {
-    //                     p = fa;
-    //                     break;
-    //                 } else {
-    //                     p = fa;
-    //                     fa = fa->father;
-    //                 }
-    //             }
-    //         }
-    //         return p;
-    //     }
-    // };
-}
+    //   Definition for a binary tree node.
+    struct TreeNode {
+        int val;
+        TreeNode* left;
+        TreeNode* right;
+        TreeNode* father;
+        TreeNode(int x) : val(x), left(NULL), right(NULL), father(NULL) {}
+    };
 
-// @date: 2022-11-02 13:58:00
+    class Solution {
+       public:
+        TreeNode* inorderSuccessor(TreeNode* p) {
+            if (p->right != NULL) {
+                p = p->right;
+                while (p->left) {
+                    p = p->left;
+                }
+            } else {
+                TreeNode* fa = p;
+                while (p) {
+                    fa = p->father;
+                    if (fa == NULL) {
+                        p = NULL;
+                        break;
+                    } else if (fa->left == p) {
+                        p = fa;
+                        break;
+                    } else {
+                        p = fa;
+                        fa = fa->father;
+                    }
+                }
+            }
+            return p;
+        }
+    };
+}
+ */
+/* // @date: 2022-11-02 13:58:00
 // @brief: 13. 找出数组中重复的数字
 int solve11(vector<int> nums) {
     map<int, int> mp;
@@ -606,7 +1512,8 @@ void solve10() {
     }
     cout << dp[n];
 }
-// @date: 2022-11-01 13:37:48
+ */
+/* // @date: 2022-11-01 13:37:48
 // @brief: 混合背包问题
 void solve9() {
     int dp[MAXN], v[10 * MAXN], w[10 * MAXN];
@@ -618,11 +1525,11 @@ void solve9() {
     cin >> N >> V;
     // @date: 2022-11-02 13:13:42
     // @brief: v 物品的体积 w 物品价值 s 物品数量
-    /*
-    si=−1 表示第 i 种物品只能用1次
-    si=0 表示第 i 种物品可以用无限次
-    si>0 表示第 i 种物品可以使用 si 次
-    */
+    //
+    // si=−1 表示第 i 种物品只能用1次
+    // si=0 表示第 i 种物品可以用无限次
+    // si>0 表示第 i 种物品可以使用 si 次
+    //
     int v_, w_, s;
     int p[MAXN];
     for (int i = 1; i <= N; i++) {
@@ -668,8 +1575,9 @@ void solve9() {
         }
     }
     cout << dp[V];
-}
-// @date: 2022-11-01 13:26:05
+} */
+
+/* // @date: 2022-11-01 13:26:05
 // @brief: 多重背包问题1 优化
 void solve8() {
     int dp[MAXN];
@@ -690,8 +1598,9 @@ void solve8() {
         }
     }
     cout << dp[V];
-}
-// @date: 2022-11-01 13:11:36
+} */
+
+/* // @date: 2022-11-01 13:11:36
 // @brief: 多重背包问题1
 void solve7() {
     int dp[MAXN][MAXN];
@@ -722,8 +1631,9 @@ void solve7() {
         }
     }
     cout << dp[N][V];
-}
-// @date: 2022-11-01 13:07:35
+} */
+
+/* // @date: 2022-11-01 13:07:35
 // @brief: 完全背包优化
 void solve6() {
     int dp[MAXN];
@@ -738,8 +1648,9 @@ void solve6() {
     }
 
     cout << dp[V];
-}
-// @date: 2022-11-01 12:58:59
+} */
+
+/* // @date: 2022-11-01 12:58:59
 // @brief: 完全背包问题
 // @date: 2022-11-01 13:06:42
 // @brief: 原来如此，我终于搞明白了
@@ -776,9 +1687,9 @@ void solve4_() {
         }
     }
     cout << dp[V];
-}
+} */
 
-// @date: 2022-10-31 16:33:29
+/* // @date: 2022-10-31 16:33:29
 // @brief: 01背包问题
 void solve4() {
     int dp[MAXN][MAXN];
@@ -797,9 +1708,9 @@ void solve4() {
         }
     }
     cout << dp[N][V];
-}
+} */
 
-// @date: 2022-10-31 15:55:33
+/* // @date: 2022-10-31 15:55:33
 // @brief:
 
 int sumOfUnique(vector<int>& nums) {
@@ -821,9 +1732,9 @@ int sumOfUnique(vector<int>& nums) {
         }
     }
     return sum;
-}
+} */
 
-// @date: 2022-10-31 15:51:26
+/* // @date: 2022-10-31 15:51:26
 // @brief: 809. 情感丰富的文字
 
 int expressiveWords(string s, vector<string>& words) {
@@ -877,9 +1788,9 @@ int expressiveWords(string s, vector<string>& words) {
         }
     }
     return ans;
-}
+} */
 
-// @date: 2022-10-30 15:45:46
+/* // @date: 2022-10-30 15:45:46
 // @brief: P1047 [NOIP2005 普及组] 校门外的树
 void solve3() {
     int l[100000];
@@ -899,9 +1810,9 @@ void solve3() {
         if (!l[i]) cnt++;
     }
     cout << cnt << endl;
-}
+} */
 
-// @date: 2022-10-30 15:44:08
+/* // @date: 2022-10-30 15:44:08
 // @brief: P1046 [NOIP2005 普及组] 陶陶摘苹果
 void solve2() {
     int a[100];
@@ -916,9 +1827,9 @@ void solve2() {
         if (a[i] <= p) cnt++;
     }
     cout << cnt << endl;
-}
+} */
 
-// @date: 2022-10-30 15:24:02
+/* // @date: 2022-10-30 15:24:02
 // @brief: P1035 [NOIP2002 普及组] 级数求和
 void solve1() {
     int k;
@@ -933,3 +1844,4 @@ void solve1() {
     }
     cout << (int)i;
 }
+ */
