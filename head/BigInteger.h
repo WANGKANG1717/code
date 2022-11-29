@@ -9,22 +9,25 @@
 
 // @date: 2022-11-27 17:17:37
 // @brief: 谢邀 一个大数类 我写了三百多行还没写完 真的会谢
-
+// @date: 2022-11-28 16:57:17
+// @brief: 写了三四个小时 终于搞定了
 #ifndef __BIGINTEGER_H__
 #define __BIGINTEGER_H__
 
 #include <cstring>
+#include <string>
 #include <vector>
 #define MAXN 9999
 #define MAXSIZE 10
 #define DLEN 4
+using namespace std;
 // @date: 2022-11-27 15:29:40
 // @brief: 不考虑冗余的0的情况
 class BigInteger {
    public:
     vector<int> num;            // 存储位数
     bool sign;                  // true 负数
-    int length;                 // 大数长度
+    int length;                 // 大数长度         注意 0 的时候length=0 -> num.size()=1
     BigInteger(const int = 0);  //将一个int类型的变量转化为大数
     BigInteger(const char *);
     BigInteger(const string &);      //将一个字符串类型的变量转化为大数
@@ -36,18 +39,20 @@ class BigInteger {
     BigInteger &operator=(const string &);
     BigInteger &operator=(const BigInteger &);  //重载赋值运算符，大数之间进行赋值运算
 
-    friend istream &operator>>(istream &, BigInteger &);  //重载输入运算符
-    friend ostream &operator<<(ostream &, BigInteger &);  //重载输出运算符
+    friend istream &operator>>(istream &, const BigInteger &);  //重载输入运算符
+    friend ostream &operator<<(ostream &, BigInteger &);        //重载输出运算符
 
-    BigInteger operator+(const BigInteger &) const;  //重载加法运算符，两个大数之间的相加运算
-    BigInteger operator-(const BigInteger &) const;  //重载减法运算符，两个大数之间的相减运算
-    BigInteger operator*(const BigInteger &) const;  //重载乘法运算符，两个大数之间的相乘运算
-    BigInteger operator/(const int &) const;         //重载除法运算符，大数对一个整数进行相除运算
+    BigInteger operator+(const BigInteger &) const;
+    BigInteger operator-(const BigInteger &) const;
+    BigInteger operator*(const BigInteger &) const;
+    BigInteger operator/(const int &) const;         // 大数除小数
+    BigInteger operator/(const BigInteger &) const;  //大数除大数
+    BigInteger operator%(const int &) const;         //大数取余小数
+    BigInteger operator%(const BigInteger &) const;  //大数取余大数
+    BigInteger operator^(const int &) const;         //大数阶乘
 
-    BigInteger operator^(const int &) const;  //大数的n次方运算
-    int operator%(const int &) const;         //大数对一个int类型的变量进行取模运算
-    //负号
-    BigInteger operator-() const;
+    BigInteger operator-() const;  //负号
+    BigInteger operator+() const;  //正号
     bool operator==(const BigInteger &) const;
     bool operator!=(const BigInteger &) const;
     bool operator<(const BigInteger &) const;
@@ -68,6 +73,21 @@ class BigInteger {
         } else {
             length = num.size();
         }
+    }
+    BigInteger abs() const {
+        BigInteger ans(*this);
+        ans.sign = false;
+        return ans;
+    }
+
+    BigInteger e(int n) const {
+        BigInteger ans;
+        ans.length = n + 1;
+        while (ans.num.size() <= n) {
+            ans.num.push_back(0);
+        }
+        ans.num[n] = 1;
+        return ans * (*this);
     }
 };
 
@@ -144,7 +164,7 @@ istream &operator>>(istream &in, BigInteger &x) {
     return in;
 }
 
-ostream &operator<<(ostream &out, BigInteger &x) {
+ostream &operator<<(ostream &out, const BigInteger &x) {
     if (x.sign) {
         out << "-";
     }
@@ -227,12 +247,114 @@ BigInteger BigInteger::operator-(const BigInteger &x) const {
     ans.setLength();
     return ans;
 }
-
+// 负号
 BigInteger BigInteger::operator-() const {
     BigInteger ans(*this);
     BigInteger zero;
     if (ans != zero)
         ans.sign = !ans.sign;
+    return ans;
+}
+//正号
+BigInteger BigInteger::operator+() const {
+    return *this;
+}
+BigInteger BigInteger::operator*(const BigInteger &x) const {
+    vector<int> v;
+    for (int i = 0; i < (length + x.length); i++) {
+        v.push_back(0);
+    }
+    // 对应位相乘放在合适的位置，以待进一步进位
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < x.length; j++) {
+            v[i + j] += num[i] * x.num[j];  //这里是+=号偶 还好去OJ上判了下
+        }
+    }
+    // 退位
+    while (v.back() == 0 && v.size() != 1) {
+        v.pop_back();
+    }
+    //
+    BigInteger ans;
+    ans.num.clear();
+    ans.sign = !((v.size() == 1 && v[0] == 0) /* 说明是零 */ ||
+                 (sign == x.sign) /* 符号相同为正数 */);
+    int tmp = 0;
+    for (int i = 0; i < v.size(); i++) {
+        ans.num.push_back((v[i] + tmp) % 10);
+        tmp = (tmp + v[i]) / 10;
+    }
+    if (tmp) {
+        ans.num.push_back(tmp);
+    }
+    ans.setLength();
+    return ans;
+}
+BigInteger BigInteger::operator/(const int &s) const {
+    int x = s;
+    BigInteger ans;
+    ans.num.clear();
+    ans.sign = !((*this == 0) || ((sign && x < 0) || (!sign && x > 0)));
+    if (x < 0) x = -x;  // 注意这里
+    for (int i = 0; i < num.size(); i++) {
+        ans.num.push_back(0);
+    }
+    int tmp = 0;
+    for (int i = num.size() - 1; i >= 0; i--) {
+        ans.num[i] = int((tmp * 10 + num[i]) / x);
+        tmp = (tmp * 10 + num[i]) % x;
+    }
+    ans.setLength();
+    return ans;
+}
+BigInteger BigInteger::operator/(const BigInteger &x) const {
+    BigInteger a = ((*this).abs());
+    BigInteger b = (x.abs());
+    if (a < b) {
+        return 0;
+    }
+    BigInteger ans, tmp;
+    ans.num.clear();
+    int lena = num.size();
+    int lenb = x.num.size();
+    char *str = new char[lena + 1];
+    memset(str, 0, sizeof(char) * (lena + 1));
+
+    for (int i = 0; i <= lena - lenb; i++) {
+        tmp = b.e(lena - lenb - i);
+        while (a >= tmp) {
+            ++str[i];
+            a = a - tmp;
+        }
+        str[i] += '0';
+    }
+    ans = str;
+    delete[] str;
+    ans.sign = !(ans == 0 || sign == b.sign);
+    return ans;
+}
+BigInteger BigInteger::operator%(const BigInteger &x) const {
+    return *this - (*this / x) * x;
+}
+BigInteger BigInteger::operator%(const int &x) const {
+    long long ans = 0;  // 这里要用longlong 不然会爆int
+    for (int i = num.size() - 1; i >= 0; i--) {
+        ans = (ans * 10 + num[i]) % x;
+    }
+    return ans;
+}
+BigInteger BigInteger::operator^(const int &x) const {
+    // @date: 2022-11-28 16:39:37
+    // @brief: 快速幂
+    BigInteger ans = 1, base = *this;
+    int n = x;
+    while (n) {
+        if (n & 1) {
+            ans = ans * base;
+        }
+        base = base * base;
+        n >>= 1;
+    }
     return ans;
 }
 bool BigInteger::operator==(const BigInteger &x) const {

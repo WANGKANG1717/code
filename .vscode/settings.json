@@ -75,7 +75,8 @@
         "shared_mutex": "cpp",
         "thread": "cpp",
         "typeindex": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "ciso646": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

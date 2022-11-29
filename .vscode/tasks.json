@@ -13,7 +13,7 @@
 				"${workspaceFolder}\\build\\${fileBasenameNoExtension}.exe",
 				//此命令不需要建build文件夹
 				// "${fileDirname}\\${fileBasenameNoExtension}.exe",
-				"-std=c++17"
+				"-std=c++11"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

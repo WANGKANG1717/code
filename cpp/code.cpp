@@ -6,6 +6,7 @@
  * @date: 2022-10-30 15:24:34
  * @description:  刷题
  */
+
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -19,6 +20,215 @@
 #include <unordered_map>
 #include <vector>
 using namespace std;
+/* 
+// @date: 2022-11-28 19:15:44
+// @brief: 46. 二叉搜索树的后序遍历序列
+class Solution {
+public:
+    bool verifySequenceOfBST(vector<int> sequence) {
+        return dfs(0, sequence.size()-1, sequence);
+    }
+    bool dfs(int l, int r, vector<int> &seq) {
+        if(l>=r) {
+            return true;
+        }
+        int root=seq[r];
+        int k=l;
+        while(k<r && seq[k]<root) {
+            k++;
+        }
+        for(int j=k; j<r; j++) {
+            if(seq[j]<root) {
+                return false;
+            }
+        }
+        return dfs(l, k-1, seq) && dfs(k, r-1, seq);
+    }
+};
+
+ */
+/* 
+//之字形打印二叉树
+class Solution {
+public:
+    vector<vector<int>> printFromTopToBottom(TreeNode* root) {
+        vector<vector<int>> ans;
+        vector<int> tmp_ans;
+        ans.clear();
+        queue<TreeNode *> q;
+        int cnt = 0;
+        if (root != NULL) {
+            q.push(root);
+            cnt++;
+        }
+        int dep=0;
+        while (!q.empty()) {
+            int tmp_cnt = 0;
+            tmp_ans.clear();
+            while (cnt) {
+                TreeNode *p = q.front();
+                q.pop();
+                tmp_ans.push_back(p->val);
+                if (p->left != NULL) {
+                    q.push(p->left);
+                    tmp_cnt++;
+                }
+                if (p->right) {
+                    q.push(p->right);
+                    tmp_cnt++;
+                }
+                cnt--;
+            }
+            cnt = tmp_cnt;
+            if(dep&1) reverse(tmp_ans.begin(), tmp_ans.end());
+            dep++;
+            ans.push_back(tmp_ans);
+        }
+        return ans;
+    }
+};
+ */
+/* 
+// @date: 2022-11-28 18:56:38
+// @brief: 44. 分行从上往下打印二叉树
+class Solution {
+   public:
+    vector<vector<int>> printFromTopToBottom(TreeNode *root) {
+        vector<vector<int>> ans;
+        vector<int> tmp_ans;
+        ans.clear();
+        queue<TreeNode *> q;
+        int cnt = 0;
+        if (root != NULL) {
+            q.push(root);
+            cnt++;
+        }
+        while (!q.empty()) {
+            int tmp_cnt = 0;
+            tmp_ans.clear();
+            while (cnt) {
+                TreeNode *p = q.front();
+                q.pop();
+                tmp_ans.push_back(p->val);
+                if (p->left != NULL) {
+                    q.push(p->left);
+                    tmp_cnt++;
+                }
+                if (p->right) {
+                    q.push(p->right);
+                    tmp_cnt++;
+                }
+                cnt--;
+            }
+            cnt = tmp_cnt;
+            ans.push_back(tmp_ans);
+        }
+        return ans;
+    }
+}; */
+/*
+// @date: 2022-11-28 18:51:16
+// @brief: 43. 不分行从上往下打印二叉树
+class Solution {
+public:
+    vector<int> printFromTopToBottom(TreeNode* root) {
+        vector<int> ans;
+        ans.clear();
+        queue<TreeNode *> q;
+        if(root!=NULL) {
+            q.push(root);
+        }
+        while(!q.empty()) {
+            TreeNode *p=q.front();
+            q.pop();
+            ans.push_back(p->val);
+            if(p->left!=NULL) {
+                q.push(p->left);
+            }
+            if(p->right) {
+                q.push(p->right);
+            }
+        }
+        return ans;
+    }
+};
+ */
+/* // @date: 2022-11-28 18:46:49
+// @brief: 一遍过 有点爽的
+class Solution {
+   public:
+    bool isPopOrder(vector<int> pushV, vector<int> popV) {
+        if (pushV.size() != popV.size()) {
+            return false;
+        } else if (pushV.size() == 0 && popV.size() == 0) {
+            return true;
+        }
+        stack<int> s;
+        int p1 = 0, p2 = 0;
+        while (p2 < popV.size()) {
+            if (s.empty() || s.top() != popV[p2]) {
+                do {
+                    s.push(pushV[p1++]);
+                } while (s.top() != popV[p2] && p1 < pushV.size());
+            }
+            if (!s.empty() && s.top() == popV[p2]) {
+                s.pop();
+                p2++;
+            } else {
+                return false;
+            }
+        }
+        if (!s.empty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+}; */
+
+/*
+// @date: 2022-11-28 18:26:14
+// @brief: 41. 包含min函数的栈
+class MinStack {
+public:
+    #define MAXINT 0x7f7f7f7f
+    int *s1;
+    int *s2;     //单调栈
+    int top1;
+    int top2;
+    MinStack() {
+        s1=new int[10001];
+        s2=new int[10001];
+        top1=top2=-1;
+    }
+
+    void push(int x) {
+        s1[++top1]=x;
+        //单调栈    //注意这里的是<=
+        if(top2==-1 || x<=s2[top2]) {
+            s2[++top2]=x;
+        }
+    }
+
+    void pop() {
+       if(s1[top1]==s2[top2]) {
+           top2--;
+       }
+       top1--;
+    }
+
+    int top() {
+        return s1[top1];
+    }
+
+    int getMin() {
+        return s2[top2];
+    }
+};
+ */
+/*
+// @date: 2022-11-28 18:09:16
+// @brief: 大整数算法
 #include "../head/BigInteger.h"
 int main() {
     // BigInteger a = -12345678;
@@ -37,16 +247,33 @@ int main() {
 
     // BigInteger qqq;
     // cout << qqq << endl;
-    BigInteger a = 1;
-    BigInteger b = "0000100000";
+    BigInteger a = -112;
+    BigInteger b = "113";
     BigInteger c = a + b;
     // cout << a << endl;
     // cout << b << endl;
     // cout << c << endl;
-    BigInteger d = a - b;
-    cout << d << endl;
+    // BigInteger d = a - 1212;
+    // BigInteger e = a * b;
+    // BigInteger f = e.abs();
+    // cout << f << endl;
+    // cout << e << endl;
+    // BigInteger p = a / 1;
+    // cout << p << endl;
+    // BigInteger r = a % 113;
+    // cout << r << endl;
+    // BigInteger q = a % b;
+    // cout << q << endl;
+    // BigInteger p = a.e(6);
+    // cout << p << endl;
+    // BigInteger p = a / 11;
+    // cout << p << endl;
+    // BigInteger q = 11;
+    // BigInteger l = a / q;
+    // cout << l << endl;
+    cout << a + b << endl;
     return 0;
-}
+} */
 
 /* // @date: 2022-11-27 14:39:31
 // @brief: 进制转换
