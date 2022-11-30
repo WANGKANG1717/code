@@ -5,6 +5,8 @@
 using namespace std;
 #define MAXN 10001
 #define MAXINT 0x7f7f7f7f
+// @date: 2022-11-30 19:05:58
+// @brief: 今天的主要任务是将堆和最小生成树的代码实现了一下，尤其是堆优化，我还是第一次写，堆优化是真的爽
 int G[MAXN][MAXN];
 int N = 5;
 int edgeNum = 7;
@@ -166,7 +168,26 @@ void kruskal() {
     }
 }
 // @date: 2022-11-30 19:02:21
-// @brief: 
+// @brief:堆优化 YYDS 简单几行就会搞定了 太爽了
+void kruskal2() {
+    // 初始化并查集
+    init();
+    priority_queue<Edge> q;
+    for (int i = 0; i < N; i++) {
+        for (int j = i + 1; j < N; j++) {
+            if (G[i][j] < MAXINT) q.push(Edge{i, j, G[i][j]});
+        }
+    }
+    for (int i = 0; i < N; i++) {
+        Edge k = q.top();
+        q.pop();
+        if (getRoot(k.from) != getRoot(k.to)) {
+            cout << k << endl;
+            merge(k.from, k.to);
+        }
+    }
+}
+
 int main() {
     int x[] = {0, 0, 0, 1, 1, 2, 3};
     int y[] = {1, 3, 4, 2, 4, 3, 4};
