@@ -187,16 +187,15 @@ void kruskal2() {
         }
     }
 }
-
 int main() {
     int x[] = {0, 0, 0, 1, 1, 2, 3};
     int y[] = {1, 3, 4, 2, 4, 3, 4};
     int w[] = {2, 1, 3, 2, 4, 1, 5};
-    build(x, y, w, edgeNum);
-    // prim(0);
-    // prim2(0);
-    // kruskal();
-    kruskal2();
+    // build(x, y, w, edgeNum);
+    // // prim(0);
+    // // prim2(0);
+    // // kruskal();
+    // kruskal2();
     // print();
 
     return 0;
