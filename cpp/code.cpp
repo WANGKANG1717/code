@@ -6,7 +6,6 @@
  * @date: 2022-10-30 15:24:34
  * @description:  刷题
  */
-
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -20,7 +19,138 @@
 #include <unordered_map>
 #include <vector>
 using namespace std;
-/* 
+#define MAXN 1010
+#define MAXINT 0x3f3f3f3f
+#define ll long long
+// @date: 2022-12-03 17:55:49
+// @brief:  下面要开始搞一下排序了
+/*
+// @date: 2022-12-03 17:54:48
+// @brief: 1168. 简单单源最短路径问题 没有过 主要是还得优化时间 性价比太低了，放弃
+struct Node {
+    ll to, w;
+    Node(int to, int w) : to(to), w(w) {}
+};
+vector<Node> G[MAXN];
+int N, M, S;
+ll len[MAXN];
+bool BellmanFord(int s) {
+    // memset(len, 0x3f, sizeof(len));
+    fill(len, len + MAXN, MAXINT);
+    len[s] = 0;
+    // 最外层循环只需要N-1次
+    for (int k = 1; k < N; k++) {
+        int flag = 0;
+        for (int i = 1; i <= N; i++) {
+            for (auto it = G[i].begin(); it != G[i].end(); it++) {
+                if (len[i] + it->w < len[it->to]) {
+                    len[it->to] = len[i] + it->w;
+                    flag = 1;
+                }
+            }
+        }
+        // 一轮循环下来没有信息更新可以提前跳出循环
+        if (!flag) {
+            break;
+        }
+    }
+    for (int i = 1; i <= N; i++) {
+        for (auto it = G[i].begin(); it != G[i].end(); it++) {
+            if (len[i] + it->w < len[it->to]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+int vis[MAXN];
+int num[MAXN];
+bool SPFA(int s) {
+    memset(vis, 0, sizeof(vis));
+    memset(num, 0, sizeof(num));
+    memset(len, 0x3f, sizeof(len));
+    queue<int> q;
+    q.push(s);
+    len[s] = 0;
+    vis[s] = true;
+    num[s]++;
+    while (!q.empty()) {
+        int k = q.front();
+        q.pop();
+        vis[k] = false;
+        for (auto it = G[k].begin(); it != G[k].end(); it++) {
+            if ((len[k] + it->w) < len[it->to]) {
+                len[it->to] = len[k] + it->w;
+                // num[it->to]++;
+                num[it->to] = num[k] + 1;
+                if (num[it->to] >= N) {  // 说明可能有负环
+                    return false;
+                }
+                if (!vis[it->to]) {
+                    q.push(it->to);
+                    vis[it->to] = true;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+bool minus_circle() {
+    memset(vis, 0, sizeof(vis));
+    memset(num, 0, sizeof(num));
+    memset(len, 0x3f, sizeof(len));
+    queue<int> q;
+    for (int i = 1; i <= N; i++) {
+        q.push(i);
+        vis[i] = true;
+        len[i] = 0;
+    }
+    while (!q.empty()) {
+        int k = q.front();
+        q.pop();
+        vis[k] = false;
+        for (auto it = G[k].begin(); it != G[k].end(); it++) {
+            if ((len[k] + it->w) < len[it->to]) {
+                len[it->to] = len[k] + it->w;
+                // num[it->to]++;
+                num[it->to] = num[k] + 1;
+                if (num[it->to] >= N) {  // 说明可能有负环
+                    return false;
+                }
+                if (!vis[it->to]) {
+                    q.push(it->to);
+                    vis[it->to] = true;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+int main() {
+    cin >> N >> M >> S;
+    int l, r, w;
+    for (int i = 0; i < M; i++) {
+        cin >> l >> r >> w;
+        G[l].push_back(Node(r, w));
+    }
+    // 要先判一下负环 需要把所有的点都进行一次SPFA
+    if (!minus_circle()) {
+        cout << "-1" << endl;
+        return 0;
+    }
+    SPFA(S);
+    for (int i = 1; i <= N; i++) {
+        if (len[i] >= MAXINT) {
+            cout << "NoPath" << endl;
+        } else
+            cout << len[i] << endl;
+    }
+
+    return 0;
+} */
+/*
 // @date: 2022-11-28 19:15:44
 // @brief: 46. 二叉搜索树的后序遍历序列
 class Solution {
@@ -47,7 +177,7 @@ public:
 };
 
  */
-/* 
+/*
 //之字形打印二叉树
 class Solution {
 public:
@@ -88,7 +218,7 @@ public:
     }
 };
  */
-/* 
+/*
 // @date: 2022-11-28 18:56:38
 // @brief: 44. 分行从上往下打印二叉树
 class Solution {

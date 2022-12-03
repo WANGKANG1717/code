@@ -2,7 +2,7 @@
  * @Author: WANGKNG
  * @Date: 2022-12-02 16:07:45
  * @LastEditors: WANGKANG
- * @LastEditTime: 2022-12-02 17:24:48
+ * @LastEditTime: 2022-12-03 16:57:38
  * @Description: Bellman ford 算法
  */
 
@@ -119,14 +119,14 @@ void SPFA(int s) {
             int w = it->weight;
             if (len[k] + w < len[to]) {
                 len[to] = len[k] + w;
+                num[to]++;
+                if (num[to] >= N) {
+                    cout << "可能存在负环" << endl;
+                    exit(0);
+                }
                 if (!vis[to]) {
                     q.push(to);
                     vis[to] = true;
-                    num[to]++;
-                    if (num[to] >= N) {
-                        cout << "可能存在负环" << endl;
-                        exit(0);
-                    }
                 }
             }
         }
