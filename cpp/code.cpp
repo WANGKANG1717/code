@@ -14,6 +14,7 @@
 #include <iostream>
 #include <map>
 #include <queue>
+#include <set>
 #include <stack>
 #include <string>
 #include <unordered_map>
@@ -22,8 +23,126 @@ using namespace std;
 #define MAXN 1010
 #define MAXINT 0x3f3f3f3f
 #define ll long long
-// @date: 2022-12-03 17:55:49
-// @brief:  下面要开始搞一下排序了
+/*
+// @date: 2022-12-03 18:42:11
+// @brief: 51. 数字排列
+// 主要问题在于 要会用 next_permutation 以及使用set去重
+class Solution {
+public:
+    vector<vector<int>> permutation(vector<int>& nums) {
+        vector<vector<int>> ans;
+        set<vector<int>> tmpans;
+        int a[10]={0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int n=nums.size();
+        do {
+            vector<int> tmp;
+            for(int i=0; i<n; i++) {
+                tmp.push_back(nums[a[i]]);
+            }
+            tmpans.insert(tmp);
+        }while(next_permutation(a, a+n));
+        for(auto it=tmpans.begin(); it!=tmpans.end(); it++){
+            ans.push_back(*it);
+        }
+        return ans;
+    }
+};
+ */
+
+/*
+// @date: 2022-12-03 18:29:09
+// @brief: 52. 数组中出现次数超过一半的数字
+class Solution {
+public:
+    int moreThanHalfNum_Solution(vector<int>& nums) {
+        int tmpMax=nums[0];
+        int tmpMaxcnt=1;
+        for(auto it=nums.begin()+1; it!=nums.end(); it++) {
+            if(tmpMax!=*it) {
+                tmpMaxcnt--;
+                if(tmpMaxcnt<0) {
+                    tmpMax=*it;
+                    tmpMaxcnt=1;
+                }
+            }
+            else {
+                tmpMaxcnt++;
+            }
+        }
+        return tmpMax;
+    }
+};
+ */
+/*
+// @date: 2022-12-03 18:23:00
+// @brief: 48. 复杂链表的复刻
+class Solution {
+public:
+    void copy(ListNode*&a, ListNode*&b) {
+        if(b==NULL) {
+            return;
+        }
+        else {
+            a=new ListNode(b->val);
+            copy(a->next, b->next);
+        }
+    }
+    void copyrandom(ListNode*&a, ListNode*&b) {
+        ListNode *pa=a;
+        ListNode *pb=b;
+        while(pb!=NULL) {
+            if(pb->random!=NULL) {
+                ListNode*tmp=b;
+                int cnt=0;
+                while(tmp!=pb->random) {
+                    tmp=tmp->next;
+                    cnt++;
+                }
+                tmp=a;
+                while(cnt) {
+                    tmp=tmp->next;
+                    cnt--;
+                }
+                pa->random=tmp;
+            }
+            pa=pa->next;
+            pb=pb->next;
+        }
+    }
+    ListNode *copyRandomList(ListNode *head) {
+        ListNode* ans=NULL;
+        copy(ans, head);
+        copyrandom(ans, head);
+        return ans;
+    }
+};
+ */
+/*
+// @date: 2022-12-03 18:05:45
+// @brief: 47. 二叉树中和为某一值的路径
+class Solution {
+public:
+    vector<vector<int>> ans;
+    int sum;
+    void traverse(TreeNode * T, vector<int> path, int tmpSum) {
+        if(T==NULL) return ;
+        path.push_back(T->val);
+        tmpSum+=T->val;
+        if(T->left==NULL && T->right==NULL && tmpSum==sum) {
+            ans.push_back(path);
+            return ;
+        }
+        traverse(T->left, path, tmpSum);
+        traverse(T->right, path, tmpSum);
+    }
+    vector<vector<int>> findPath(TreeNode* root, int sum) {
+        this->sum=sum;
+        vector<int> path;
+        traverse(root, path, 0);
+        return ans;
+    }
+};
+ */
 /*
 // @date: 2022-12-03 17:54:48
 // @brief: 1168. 简单单源最短路径问题 没有过 主要是还得优化时间 性价比太低了，放弃
