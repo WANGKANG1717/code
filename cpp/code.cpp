@@ -23,6 +23,86 @@ using namespace std;
 #define MAXN 1010
 #define MAXINT 0x3f3f3f3f
 #define ll long long
+
+/*
+// 未解决
+// @date: 2022-12-03 19:21:23
+// @brief:3510. 最长公共子序列
+// 为啥这道题目用动态规划过不了尼
+#include <cstring>
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+// @date: 2022-11-26 14:23:07
+// @brief: 最长公共子序列
+// 5
+// 1 2 3 4 5
+// 1 2 3 4 5
+// 这个数据 的出来的结果是4 答案是5 我想了好久 没搞定 不想了 没时间了 时间成本太高了
+// 等我考完研 我必须解决你 等我有时间再说吧 哈哈哈哈哈哈
+#define N 1000005
+int dp[2][N];
+int n;
+int t = 0;
+int a[N], b[N];
+
+int main() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        cin >> b[i];
+    }
+    for (int i = 1; i <= n; i++, t ^= 1) {
+        for (int j = 1; j <= n; j++) {
+            dp[t ^ 1][j] = max(dp[t ^ 1][j - 1], dp[t][j]);
+            if (a[i] == b[j]) {
+                dp[t ^ 1][j] = max(dp[t ^ 1][j], dp[t][j - 1] + 1);
+            }
+        }
+    }
+    cout << dp[t ^ 1][n] << endl;
+
+    return 0;
+} */
+
+/*
+// @date: 2022-12-03 19:07:31
+// @brief: 4555. 公共子序列
+#include <cstring>
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+// @date: 2022-11-26 14:23:07
+// @brief: 最长公共子序列
+#define N 1010
+int dp[N][N];
+int n, m;
+char a[N], b[N];
+
+int main() {
+    while(cin>>(a+1)>>(b+1)) {
+    int n=strlen(a+1);
+    int m=strlen(b+1);
+    memset(dp, 0, sizeof(dp));
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (a[i] == b[j]) {
+                dp[i][j] = dp[i-1][j - 1] + 1;
+            } else {
+                dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
+            }
+        }
+    }
+    cout << dp[n][m] << endl;
+    }
+
+    return 0;
+}
+ */
 /*
 // @date: 2022-12-03 18:42:11
 // @brief: 51. 数字排列
